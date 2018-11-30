@@ -1,0 +1,53 @@
+Optimization for svengineeringworks.in
+https://svengineeringworks.in
+
+Tips:
+https://developer.yahoo.com/performance/rules.html?guccounter=1#gzip
+https://developer.yahoo.com/performance/rules.html#etags
+https://developer.yahoo.com/performance/rules.html#min_dom
+
+https://developers.google.com/web/tools/lighthouse/audits/webp
+https://developers.google.com/web/tools/lighthouse/audits/offscreen-images
+https://developers.google.com/web/tools/lighthouse/audits/blocking-resources
+https://developers.google.com/web/tools/lighthouse/audits/address-bar
+
+https://developers.google.com/web/tools/lighthouse/audits/cache-policy
+
+Critical Request Chains [asset near root folder]
+Is not configured for a custom splash screen
+Failures: No manifest was fetched.
+
+
+https://stackoverflow.com/questions/42849166/server-unable-to-read-htaccess-file-denying-access-to-be-safe/43487689
+https://stackoverflow.com/questions/31365981/server-unable-to-read-htaccess-file-denying-access-to-be-safe?rq=1
+
+
+Load links and script for another domain:
+
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/modern-business.css" rel="stylesheet">
+<link rel="shortcut icon" type="image/png" href="images/favicon.jpg"/>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+SEO speed up
+
+$('.lazy').each(function (index,elem){
+	elem.src = elem.data-src;
+});
+We found some dynamic urls on your site. Unless they are needed for tracking purposes, we recommend to remove them.
+You need to increase your back links, you should consider creating an email outreach program.
+Create more content rich pages, as it will help you rank for more long tail keywords.
+We noticed that your tag is too long. It's best to keep your meta description between 150 and 160 characters.
+Title tags are an important on-page factor for SEO. Aim to make your title tag more descriptive but containing fewer than 70 characters. This is the limit Google displays in search results.
+We found  tags that don't include the alt attribute. Since search engines can't see the image, including an alt tag helps search engines know what you are showing on your site.
+The majority of the keywords are not found in the site title. Make sure you place your most descriptive keywords in the site title.
+The majority of the keywords are not found in the meta description. Make sure you place your most descriptive keywords in the meta description.
+The majority of the keywords are not found in heading tags. Make sure you place your most descriptive keywords in heading tags.
+
+
+[Wed Nov 28 22:37:53.994991 2018] [core:crit] [pid 784295:tid 139735020410624] (13)Permission denied: [client 103.213.201.58:54576] AH00529: /home/svengine/public_html/resources/.htaccess pcfg_openfile: unable to check htaccess file, ensure it is readable and that '/home/svengine/public_html/resources/' is executable, referer: https://svengineeringworks.in/
+
+[Wed Nov 28 23:08:07.158862 2018] [core:crit] [pid 784295:tid 139735230207744] (13)Permission denied: [client 103.213.201.58:41276] AH00529: /home/svengine/public_html/resources/.htaccess pcfg_openfile: unable to check htaccess file, ensure it is readable and that '/home/svengine/public_html/resources/' is executable, referer: https://resources.svengineeringworks.in/vendor/bootstrap/css/bootstrap-grid.css

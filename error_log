@@ -1,0 +1,7 @@
+[14-Nov-2018 10:07:44 UTC] PHP Notice:  Undefined variable: conn in /home/svengine/public_html/seo.php on line 6
+[14-Nov-2018 10:07:44 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/svengine/public_html/seo.php:6
+Stack trace:
+#0 /home/svengine/public_html/header.php(3): include()
+#1 /home/svengine/public_html/index.php(1): include('/home/svengine/...')
+#2 {main}
+  thrown in /home/svengine/public_html/seo.php on line 6

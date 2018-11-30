@@ -1,0 +1,10 @@
+[17-Nov-2018 11:45:36 UTC] PHP Fatal error:  Uncaught Exception: Operation timed out after 628 milliseconds with 0 out of 0 bytes received in /home/svengine/public_html/apps/ytd/src/Http/CurlClient.php:153
+Stack trace:
+#0 /home/svengine/public_html/apps/ytd/src/Http/CurlClient.php(63): YoutubeDownloader\Http\CurlClient->getHttpResponseFromCurl(Resource id #48, Array)
+#1 /home/svengine/public_html/apps/ytd/src/Application/ControllerAbstract.php(105): YoutubeDownloader\Http\CurlClient->send(Object(YoutubeDownloader\Http\Request), Array)
+#2 /home/svengine/public_html/apps/ytd/src/Application/ResultController.php(174): YoutubeDownloader\Application\ControllerAbstract->getSize('https://r1---sn...', Object(YoutubeDownloader\Config), Object(YoutubeDownloader\Toolkit))
+#3 /home/svengine/public_html/apps/ytd/src/Application/App.php(83): YoutubeDownloader\Application\ResultController->execute()
+#4 /home/svengine/public_html/apps/ytd/getvideo.php(23): YoutubeDownloader\Application\App->runWithRoute('results')
+#5 {main}
+
+Next RuntimeException: A curl error occurs w in /home/svengine/public_html/apps/ytd/src/Http/CurlClient.php on line 156
