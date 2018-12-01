@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /sms
+Disallow: /cgi-bin/
+Disallow: /resources
+Disallow: /backup

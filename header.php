@@ -13,6 +13,8 @@ include 'seo.php';
     <meta name="keywords" content="<?php echo $keywords;?>">
     <meta name="description" content="<?php echo $description;?>">
     <meta name="Robots" content="INDEX,FOLLOW">
+    <meta name="theme-color" content="#216ff3">
+    <link rel="manifest" href="<?php echo baseUrl;?>/manifest.json">
     <title>SV Engineering</title>
 
     <!-- Bootstrap core CSS -->

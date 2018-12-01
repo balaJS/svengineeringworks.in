@@ -1,3 +1,6 @@
+RewriteEngine On 
+RewriteCond %{SERVER_PORT} 80 
+#RewriteRule ^(.*)$ https://www.svengineeringworks.in/$1 [R,L]
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
@@ -47,7 +50,6 @@ Header set Cache-Control "max-age=2628000, public"
 <filesMatch ".(jpg|jpeg|png|gif|ico)$">
 Header set Cache-Control "max-age=86400, public"
 </filesMatch>
-
 
 ErrorDocument 404 https://svengineeringworks.in/404.php
 ErrorDocument 404 /404.php 
