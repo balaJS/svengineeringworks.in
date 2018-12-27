@@ -1,0 +1,43 @@
+Logic for Sv engineering website:
+Index page:
+Welcome to Printing machinary world.
+
+This site provide to you, Buying and selling on online.lazyload
+It's all to free.
+Just create an account.
+Upload your requirement.
+Develop your bussiness world wide.
+
+Below example videos are avilable.
+
+Front end: Angular
+Backend: Code ignitor
+
+Dev principles:
+Req: No static data included on html, images and js files
+Sol: use array format and db
+Use cdn for js and css
+Use lazy load
+
+
+Angular commonds:
+ng serve -o
+ng g component gnav
+npm install bootstrap --save
+npm install jquery --save
+npm i tether --save
+npm install --save @ng-bootstrap/ng-bootstrap
+npm install --save @angular/material @angular/cdk @angular/animations
+ng add @angular/material
+and add path of bootstrap && jquery file on angular.json
+
+
+Pages:
+Home page:
+  Gnav
+  Banner
+  Content
+  Footer
+
+########################################################################################
+09-12-2018 6.00pm

@@ -22,8 +22,8 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="<?php echo resourceUrl;?>/js/jquery.min.js" defer></script>
-    <script src="<?php echo resourceUrl;?>/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js" defer></script>
     <script src="<?php echo resourceUrl;?>/js/site.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </body>

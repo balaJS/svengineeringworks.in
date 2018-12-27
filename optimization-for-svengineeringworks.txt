@@ -54,7 +54,7 @@ The majority of the keywords are not found in heading tags. Make sure you place 
 
 **************************************************************************************************
 <TITLE>Manufacturer of Garments Printing Machine & Air Compressor by S. V. Engineering Works, Coimbatore</TITLE>
-<title>Printing machine sales and service by S.V Engineering. Tamil nadu</title>
+<title>Printing machine sales and service by S.V Engineering,Tamil nadu</title>
 
 <META NAME="Description" CONTENT="S. V. Engineering Works - Manufacturer of Garments Printing Machine, Air Compressor & Sublimation Heat Transfer Machine from Coimbatore, Tamil Nadu, India" />
 <META NAME="Description" CONTENT="S. V. Engineering - Printing machine repair, sales and Altration from Tirunelveli, Tamil Nadu, India" />
@@ -64,12 +64,22 @@ The majority of the keywords are not found in heading tags. Make sure you place 
 
 <!-- Open Meta Data -->
 <meta property="og:title" content="Manufacturer of Garments Printing Machine & Air Compressor by S. V. Engineering Works, Coimbatore" />
+<meta property="og:title" content="Printing machine sales and service by S.V Engineering,Tamil nadu" />
+
 <meta property="og:site_name" content="http://www.svfusing.in/"/><m eta property="og:url" content="http://www.svfusing.in/" />
+<meta property="og:site_name" content="https://svengineeringworks.in"/><m eta property="og:url" content="https://svengineeringworks.in" />
+
 <meta property="og:image" content="http://5.imimg.com/data5/YY/BV/MY-645196/industrial-air-compressor-500x500.jpg" />
 <meta property="og:image:url" content="http://5.imimg.com/data5/YY/BV/MY-645196/industrial-air-compressor-500x500.jpg" />
+<meta property="og:image" content="<?php echo resourceUrl;?>/images/offest-printing-service-provider.png" />
+<meta property="og:image:url" content="<?php echo resourceUrl;?>/images/offest-printing-service-provider.png" />
+
 <meta property="og:image:width" content="495" />
 <meta property="og:image:height" content="500" />
-<meta property="og:description" content="S. V. Engineering Works - Manufacturer of Garments Printing Machine, Air Compressor & Sublimation Heat Transfer Machine from Coimbatore, Tamil Nadu, India" /> 
+
+<meta property="og:description" content="S. V. Engineering Works - Manufacturer of Garments Printing Machine, Air Compressor & Sublimation Heat Transfer Machine from Coimbatore, Tamil Nadu, India" />
+<meta property="og:description" content="Printing machine sales and service by S.V Engineering,Tamil nadu" />
+
 <!-- Twitter Meta Data -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Manufacturer of Garments Printing Machine & Air Compressor by S. V. Engineering Works, Coimbatore" />
@@ -77,9 +87,10 @@ The majority of the keywords are not found in heading tags. Make sure you place 
 <meta name="twitter:image" content="http://5.imimg.com/data5/YY/BV/MY-645196/industrial-air-compressor-500x500.jpg" />
 <meta name="twitter:image:width" content="495" />
 <meta name="twitter:image:height" content="500" />
+
 <link rel="icon" href="http://4.imimg.com/data4/VJ/HH/GLADMIN-2003749/favicon.ico"  />
 <meta http-equiv="Content-Type" name="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="robots" content="index,follow"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link rel="canonical" href="http://www.svfusing.in/" />
-<link rel="alternate" href="http://www.svfusing.in/" id="desktop" media="only screen">
+<link rel="canonical" href="https://svengineeringworks.in" />
+<link rel="alternate" href="http://svengineeringworks.in" id="desktop" media="only screen">

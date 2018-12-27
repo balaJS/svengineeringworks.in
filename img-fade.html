@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Happy birthday Chandra baby</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <style>
+  .container { 
+        border: 2px solid lightpink;
+        border-radius: 10px;
+  }
+  img {
+    opacity: 0;
+  }
+  h1 {
+      display:none;
+      margin-top:2%;
+  }
+  </style>
+  <script>
+  //https://postcron.com/image-splitter/editor/en/download-zip/c2z5b3ndxlcd7n34evxyus
+  $(document).ready(function() {
+
+var path = 'file:///home/bala/Pictures/chandra-1/';
+//var path = '';
+var array_imgs = [];
+
+for(var i=180;i>0;i--) {
+  array_imgs.push(path+''+i+'.jpg');
+ if(array_imgs.length == 15) {
+    img_create(array_imgs); 
+    array_imgs = [];
+ }
+}
+
+    function img_create(url) {
+      //imgSrc = "<dic class='row'><img src='"+ url[0]+ "' /><img src='"+ url[1]+ "' /><img src='"+ url[2]+ "' /></div>";
+      var imgElem = [];
+      for(var i=0;i<url.length;i++) {
+        var img = "<img src='"+url[i]+"' onmousemove='got_elem(this)' />";
+        imgElem.push(img);
+      }
+      var imgstr = imgElem.join('');
+      var div = "<div class='row'>"+imgstr+"</div>";
+      $('.container').append(div);
+    }
+  });
+
+    function got_elem(e) {
+      $(e).css('opacity',1);
+      $('h1').css('display','block');
+    }
+  </script>
+</head>
+<body>
+<h1>Chandra Happy birthday</h1>
+<div class="container">
+
+</div>
+
+</body>
+</html>

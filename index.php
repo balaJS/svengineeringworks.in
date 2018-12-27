@@ -2,6 +2,7 @@
   $sql="select * from product where status=? limit 3";
   $query=$conn->prepare($sql);
   $query->execute(array('Y'));
+  $banner_alt = $description;
 ?>
     <header>
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -13,7 +14,7 @@
         <div class="carousel-inner" role="listbox">
           <!-- Slide One - Set the background image for this slide in the line below -->
           <div class="carousel-item active">
-            <img class="js-lazy-load" data-src="<?php echo resourceUrl.'/images/banner-1.jpg'; ?>" width="100%" height="auto">
+            <img class="js-lazy-load" data-src="<?php echo resourceUrl.'/images/banner-1.jpg'; ?>" width="100%" height="auto" alt="<?php echo $banner_alt;?>">
             <div class="carousel-caption d-none d-md-block">
               <h3>Buy and sell second hand machinaries</h3>
               <p>S.V Engineering</p>

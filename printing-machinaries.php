@@ -19,21 +19,29 @@ $query->execute(array('Y'));
         <li class="breadcrumb-item active">Machinaries</li>
       </ol>
 
-      <?php while($data=$query->fetch(PDO::FETCH_ASSOC)){?>
+      <?php 
+        while($data=$query->fetch(PDO::FETCH_ASSOC)){
+          $alt = strtolower($data['product_name']);
+        ?>
       <!-- Project One -->
-      <div class="row">
-        <div class="col-md-7">
-          <a href="#">
+      <div class="row prod_row">
+        <div class="col-md-5">
+          <!-- <a href="#"> -->
             <!-- img-fluid  -->
-            <img class="rounded mb-3 mb-md-0 js-lazy-load" data-src="<?php echo resourceUrl.'/images/'.$data['product_image1'];?>" alt="" width="70%" height="80%">
+            <!-- <img class="rounded mb-3 mb-md-0 js-lazy-load img_6_5" data-src="<?php echo resourceUrl.'/images/'.$data['product_image1'];?>" alt="<?php echo $alt;?>" style="width: 96%;height: 50%;"> -->
+          <!-- </a> -->
+          <img class="rounded mb-3 mb-md-0 js-lazy-load img_6_5" data-src="<?php echo resourceUrl.'/images/'.$data['product_image1'];?>" alt="<?php echo $alt;?>" style="width: 96%;">
           </a>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
           <h3><?php echo $data['product_name'];?></h3>
           <p><?php echo $data['product_desc'];?></p>
           <a class="btn btn-primary" href="tel:<?php echo $mobile1;?>">Call more details
             <span class="glyphicon glyphicon-chevron-right"></span>
           </a>
+        </div>
+        <div class="col-md-3">
+          //vendor
         </div>
       </div>
       <!-- /.row -->
