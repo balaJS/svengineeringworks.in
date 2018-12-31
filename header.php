@@ -177,19 +177,19 @@ include 'seo.php';
           </ul>
           <div class="row">
             <div class="col-md-12 js-main-div">
-              <form id='js-add_post_form'>
+              <form id='js-add_post_form' method="post" enctype="multipart/form-data" novalidate>
                 <h2> Add your products</h2>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="prod_cat">Machine catagory:</label>
-                      <input type="text" class="form-control" id="prod_cat" name="prod_cat">
+                      <input type="text" class="form-control" id="prod_cat" name="prod_cat" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="machine_type">Machine type:</label>
-                      <select class="form-control" id="machine_type" name="machine_type">
+                      <select class="form-control" id="machine_type" name="machine_type" required>
                         <option value="1">New</option>
                         <option value="0">Second hand</option>
                       </select>
@@ -197,30 +197,40 @@ include 'seo.php';
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                       <div class="form-group">
-                        <label for="post_name">Name:</label>
-                        <input type="text" class="form-control" id="post_name" name="post_name">
+                        <label for="product_name">Name:</label>
+                        <input type="text" class="form-control" id="product_name" name="product_name" required>
                       </div>
                   </div>
-                  <div class="col-md-6">
+                </div>
+                <span class="js-main-attr-span">
+                <div class="row js-attr-row">
+                  <div class="col-md-5">
                     <div class="form-group">
                       <label for="attr_name">Attribute name:</label>
-                      <input type="text" class="form-control" id="attr_name" name="attr_name">
+                      <input type="text" class="form-control" id="attr_name" name="attr_name[]" required>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="attr_value">Attribute value:</label>
+                        <input type="text" class="form-control" id="attr_value" name="attr_value[]" required>
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group"><p>&nbsp;</p>
+                      <label class="btn btn-info btn-sm js-attr-modifier" data-value='+'><i class="fa fa-plus"></i></label>
+                      <label class="btn btn-info btn-sm js-attr-modifier" data-value='-'><i class="fa fa-trash"></i></label>
                     </div>
                   </div>
                 </div>
+                </span>
                 <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="attr_value">Attribute value:</label>
-                        <input type="text" class="form-control" id="attr_value" name="attr_value">
-                      </div>
-                  </div>
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="prod_images">Product images:</label>
-                        <input type="file" class="form-control" id="prod_images" name="images">
+                        <input type="file" class="form-control" id="prod_images" name="images" required>
                       </div>
                   </div>
                 </div>
@@ -236,60 +246,20 @@ include 'seo.php';
                 <thead>
                   <tr><td colspan="3"><h2> Your product list</h2></td></tr>
                   <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th class="mobile_hidden">Lastname</th>
-                    <th class="mobile_hidden">Lastname</th>
+                    <th>Image</th>
+                    <th>Product name</th>
+                    <th class="mobile_hidden">Specification</th>
+                    <th class="mobile_hidden">Decsription</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td class="mobile_hidden ">Testing 1</td>
-                    <td class="mobile_hidden ">Testing 2</td>
-                    <td colspan="2">
-                      <button class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                      <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td class="mobile_hidden">Testing 1</td>
-                    <td class="mobile_hidden">Testing 2</td>
-                    <td colspan="2">
-                      <button class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                      <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td class="mobile_hidden">Testing 1</td>
-                    <td class="mobile_hidden">Testing 2</td>
-                    <td colspan="2">
-                      <button class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                      <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td class="mobile_hidden">Testing 1</td>
-                    <td class="mobile_hidden">Testing 2</td>
-                    <td colspan="2">
-                      <button class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                      <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td class="mobile_hidden ">Testing 1</td>
-                    <td class="mobile_hidden ">Testing 2</td>
-                    <td colspan="2">
+                  <tr class="list_product_tr hidden">
+                    <td style="width: 7em;"></td>
+                    <td></td>
+                    <td class="mobile_hidden "></td>
+                    <td class="mobile_hidden "></td>
+                    <td colspan="2" data-id="">
                       <button class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                       <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>

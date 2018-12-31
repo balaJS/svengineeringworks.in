@@ -15,16 +15,20 @@ site.ajax = {
 		var page = req.url ? req.url : 'route.php';
 		if (window.location.hostname === 'localhost') page = 'projects/svengineeringworks.in/'+ page;
 		var url = window.location.origin+'/'+page;
-		var type = req.type;
-		var request = req.req;
-		var async = req.async;
 		//var data_type = req.dataType;
+		var processData = req.processData ? false : true;
+		var contentType = req.contentType ? false : 'application/x-www-form-urlencoded; charset=UTF-8';
 		$.ajax({
 			url: url,
-			type: type || 'POST',
+			type: req.type || 'POST',
 			//dataType: data_type || 'jsonp',
-			async: async || false,
-			data: request,
+			processData: processData,
+			contentType: contentType,
+			async: req.async || false,
+			data: req.req,
+			beforeSend: function() {
+
+			},
 			success: function(res) {
 				console.log(res);
 				if(!res) return site.ajax.response = res;
@@ -91,6 +95,10 @@ site.popup = {
 	popup_submit: function() {
 
 	},
+	popup_close: function(popup) {
+		$('.error').remove();
+		$(popup).modal('hide');
+	},
 };
 site.popup.init(site.popup.popup);
 
@@ -136,7 +144,28 @@ site.crud = {
                     </div>
                   </td></tr>
 		`;
-	}
+	},
+	prod_list: function($table, $template, overall_data) {
+		var $innerHtml;var $new_tr;
+		$template.removeClass('hidden');
+		var  td_length = $('td', $template).length;
+		var obj_values = ['product_image1','product_name','product_spec','product_desc','product_id'];
+
+		$(overall_data).each(function(i, data) {
+			$new_tr = $template.clone(true);
+			$('td', $new_tr).each(function(index, elem) {
+				$innerHtml = index === 0 ? `<img src='resources/${data[obj_values[index]]}' style="width: 5em;">` : data[obj_values[index]];
+
+				if((td_length - 1) === index) {
+					$(elem).attr('data-id', parseInt(data[obj_values[index]])); return;
+				}
+				$(elem).html($innerHtml);
+			});
+
+			$($table + ' > tbody').append($new_tr);
+		});
+		$template.addClass('hidden');
+	},
 };
 
 site.validator = {
@@ -174,8 +203,13 @@ site.validator = {
 		var criteria = !email_validation ? 'Please check your email format' : false;
 		return {'status': email_validation, 'criteria': criteria};
 	},
-	error_show: function(elem, input) {
+	error_show: function(elem, input, type = 0 ,submit_enable = 0) {
 		if (input.status) {
+			if(type) {
+				$('.error').remove();
+				var template = `<span class='error' style='color:green;'>${input.criteria} <br/></span>`;
+				elem.closest('form').find('button').before(template); return;
+			}
 			elem.next().remove();
 			elem.closest('form').find('button[type="submit"]').removeAttr('disabled');
 			return;
@@ -183,39 +217,91 @@ site.validator = {
 		elem.next().remove();
 		var template = `<span class='error'>${input.criteria}</span>`;
 		elem.after(template);
-		elem.closest('form').find('button[type="submit"]').attr('disabled',true);
+		if(!submit_enable) elem.closest('form').find('button[type="submit"]').attr('disabled',true);
 	},
 };
 site.validator.init();
-
-site.form_submit = {
-	init: function() {
-		$('#js-common_popup').submit(function(e) {
-			e.preventDefault();
-			var response = site.ajax.get_data({req: $(this).serializeArray()});
-			console.log(response);
-			site.login_update(true, response);
-			$('#js-common_model').modal('hide');
-			return false;
-		});
-	},
-};
-site.form_submit.init();
 
 site.login_update = function(from = false, data) {
 	if(!from) {
 		data = site.ajax.get_data({type: 'GET',req: {'request': ''}});
 	}
 
-	if($.isEmptyObject(data)) {
+	if($.isEmptyObject(data) || !data.status) {
 		$('a[data-submit="logout"]').addClass('hidden');
 		$('a[data-submit="login"]').html('Login');
 		$('a[data-submit="register"]').removeClass('hidden');
+		localStorage.setItem('sv_user', '');
 		return;
 	}
 	$('a[data-submit="register"]').addClass('hidden');;
 	$('a[data-submit="login"]').html(`Hi ${data.uname}`);
 	$('a[data-submit="logout"]').removeClass('hidden');
+	localStorage.setItem('sv_user', data.id);
 	//$('.navbar-toggler').click();
 };
 site.login_update(false, {});
+
+site.form_submit = {
+	init: function() {
+		$('#js-common_popup').submit(function(e) {
+			e.preventDefault();
+			var response = site.ajax.get_data({req: $(this).serializeArray()});
+			//console.log(response);
+			site.login_update(true, response);
+
+			if(!response.status) {
+				$(response).each(function(index, response) {
+					site.validator.error_show($(`#${response.field}`), response, 0 ,1);
+				});
+				return false;
+			}
+			site.popup.popup_close('#js-common_model');
+			return false;
+		});
+
+		$('#js-add_post_form').submit(function(e) {
+			e.preventDefault();
+			var form_data = new FormData(this);
+			//var response = site.ajax.get_data({req: $(this).serializeArray()});
+			var response = site.ajax.get_data({req: form_data,processData: true, contentType: true});
+
+			if(!response.status && response.redirect) {
+				alert('You need to login first.'); location.reload();
+			}
+			if(!response.status) {
+				$(response).each(function(index, response) {
+					site.validator.error_show($(`#${response.field}`), response, 0 ,1);
+				});
+				return false;
+			}
+			site.validator.error_show($(`#${response.field}`), response, 1 ,1);
+			//site.popup.popup_close('#js-option_model');
+		});
+		if(!(localStorage.getItem('sv_user'))) return;
+		var response = site.ajax.get_data({req: {'user_id': localStorage.getItem('sv_user'), 'limit': 5}});
+		if(response.status) site.crud.prod_list('#js-prod_list_table', $('.list_product_tr'), response.data.result);
+	},
+};
+site.form_submit.init();
+
+
+site.prod_form = {
+	init: function() {
+		this.attribute_manipulation();
+	},
+	attribute_manipulation: function() {
+		$('.js-attr-modifier').click(function() {
+			if($(this).attr('data-value') === '+') {
+				$(this).parents('.js-attr-row:first').clone(true).appendTo('.js-main-attr-span');
+			} else {
+				if($('.js-attr-row').length <= 1) {
+					alert('Must one attirbute pair needed for continue the process');
+					return false;
+				}
+				$(this).parents('.js-attr-row:first').remove();
+			}
+		});
+	},
+};
+site.prod_form.init();
