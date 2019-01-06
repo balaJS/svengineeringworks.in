@@ -110,7 +110,7 @@ if(isset($_POST['prod_cat']) && isset($_POST['product_name'])) {
 	echo json_encode($output);return;
 }
 
-if(isset($_POST['user_id']) && isset($_POST['limit'])) {
+if(isset($_POST['user_id']) && isset($_POST['limit']) && isset($_SESSION['svengg']['user']['id']) && $_SESSION['svengg']['user']['id'] == $_POST['user_id']) {
 	$table = 'product';
 	$userID = $_SESSION['svengg']['user']['id'];
 	$limit = $_POST['limit'] ? intVal($_POST['limit']) : 5;
@@ -119,7 +119,22 @@ if(isset($_POST['user_id']) && isset($_POST['limit'])) {
 	echo json_encode($output); return;
 }
 
+if(isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_SESSION['svengg']['user']['id']) && $_SESSION['svengg']['user']['id'] == $_POST['user_id']) {
+	$table = 'product';
+	$userID = $_SESSION['svengg']['user']['id'];
+	$product_id = $_POST['product_id'];
+	$condition = "where product_id='$product_id' && user_id='$userID'";
 
+	if($_POST['type'] === 'delete') {
+		$output = deleted($table, $condition, 'delete');
+		$output['field'] = 'product_name'; $output['criteria'] = 'This product was deleted successfully.';
+	} else {
+		$output = select($table, $condition);
+		#$output['field'] = 'product_name'; $output['criteria'] = 'This product was deleted successfully.';
+	}
+
+	echo json_encode($output); return;
+}
 
 
 

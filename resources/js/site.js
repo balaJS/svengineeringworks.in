@@ -30,7 +30,7 @@ site.ajax = {
 
 			},
 			success: function(res) {
-				console.log(res);
+				// console.log(res);
 				if(!res) return site.ajax.response = res;
 				return site.ajax.response = JSON.parse(res);
 			},
@@ -105,19 +105,33 @@ site.popup.init(site.popup.popup);
 site.logic = {
 	init: function(input) {
 		$(input.trigger1).click(function() {
+			let $h2 = $('.js-prod_form_h2');
+			let $submit = $('.js-prod_form_submit');
+
 			$(input.target1).show();
-			$(input.target2).hide();
+			$(input.target1).next().hide();
+
+			$(input.target1).attr('data-purpose','add');
+			$h2.html('Add product');
+			$submit.html('Add');
+
 		});
 		$(input.trigger2).click(function() {
-			$(input.target1).hide();
-			$(input.target2).show();
+			if($(input.target1).attr('data-purpose') === 'edit') {
+				$(input.target1).hide();
+				$(input.target1).next().show();
+			} else {
+				$(input.target1).hide();
+				$(input.target1).next().show();
+			}
+
 		});
 		$(input.trigger1).click();
-		
+
 	}
 };
 $('#js-option-btn').click(function() {
-	site.logic.init({'trigger1':'[data-submit="add_post"]','target1':'#js-add_post_form','trigger2':'[data-submit="list_post"]','target2':'#js-prod_list_table'});
+	site.logic.init({'trigger1':'[data-submit="add_post"]','target1':'#js-add_post_form','trigger2':'[data-submit="list_post"]'});
 });
 
 site.crud = {
@@ -289,11 +303,15 @@ site.form_submit.init();
 site.prod_form = {
 	init: function() {
 		this.attribute_manipulation();
+		this.deleted();
+		this.edited();
 	},
 	attribute_manipulation: function() {
 		$('.js-attr-modifier').click(function() {
 			if($(this).attr('data-value') === '+') {
-				$(this).parents('.js-attr-row:first').clone(true).appendTo('.js-main-attr-span');
+				$(this).parents('.js-attr-row:first').clone(true).insertBefore('.js-main-attr-span');
+				$(this).parents('.js-attr-row:last').find('[name="attr_name[]"]').val('');
+				$(this).parents('.js-attr-row:last').find('[name="attr_value[]"]').val('');
 			} else {
 				if($('.js-attr-row').length <= 1) {
 					alert('Must one attirbute pair needed for continue the process');
@@ -302,6 +320,62 @@ site.prod_form = {
 				$(this).parents('.js-attr-row:first').remove();
 			}
 		});
+	},
+	deleted: function() {
+		$('.js-prod_delete_btn').click(function() {
+			var self = $(this);
+			var response = site.ajax.get_data({req: {'type': 'delete','user_id': localStorage.getItem('sv_user'), 'product_id': self.parents('td').attr('data-id')}});
+			$('.error').remove();
+			var data_for_temp = response.status ? {criteria: response.criteria,color: 'green'} : {criteria: "This product won't deleted.Please try again. ",color: 'red'};
+			var template = `<tr class='error_tr'><td colspan="5"><span class='error' style='color:${data_for_temp.color};'>${data_for_temp.criteria} <br/></span></td></tr>`;
+			self.parents('tr').after(template);
+			if(!response.status) return;
+			setTimeout(function(){
+				self.parents('tr').remove();
+			 $('.error_tr').remove();
+			},2000);
+		});
+	},
+	edited: function() {
+		$('.js-prod_edit_btn').click(function() {
+			let $self = $(this);
+			let $form = $('#js-add_post_form');
+			let $h2 = $('.js-prod_form_h2');
+			let $submit = $('.js-prod_form_submit');
+			let $images = $('[name="images"]');
+
+			$form.show();$form.next().hide();
+			$form.attr('data-purpose', 'edit');
+			$h2.html('Edit product');
+			$submit.html('Update');
+
+			let response = site.ajax.get_data({req: {'type': 'get','user_id': localStorage.getItem('sv_user'), 'product_id': $self.parents('td').attr('data-id')}});
+			if(!response.status) return;
+
+			let res = response.data.result[0];
+			let attr_obj = $.parseJSON(res.product_spec);
+
+			var selector = '.js-attr-row';
+			$(`${selector}:not(:first)`).remove();
+			$.each(attr_obj, function(key, value) {
+				$(`${selector}:first`).clone(true).appendTo('.js-main-attr-span');
+				$(`${selector}:last`).find('[name="attr_name[]"]').val(key);
+				$(`${selector}:last`).find('[name="attr_value[]"]').val(value);
+			});
+			$(`${selector}:first`).remove();
+
+			$('[name="prod_cat"]').val(res.product_cat);
+			$('[name="machine_type"]').val(res.product_type);
+			$('[name="product_name"]').val(res.product_name);
+			$images.nextAll('img').remove();
+			$images.prev().hide();
+			$images.hide().after(`<img src='resources/${res.product_image1}' class='img-thumbnail' alt='${res.product_name}' style='width:45%;'>`);
+			$('.js-prod_form_submit').attr('data-id',res.product_id);
+
+		});
+	},
+	element_update: function(data) {
+		data.input === 1 ? data.element.val(data.value) : data.element.html(data.value);
 	},
 };
 site.prod_form.init();

@@ -177,8 +177,8 @@ include 'seo.php';
           </ul>
           <div class="row">
             <div class="col-md-12 js-main-div">
-              <form id='js-add_post_form' method="post" enctype="multipart/form-data" novalidate>
-                <h2> Add your products</h2>
+              <form id='js-add_post_form' method="post" enctype="multipart/form-data" data-purpose='add' novalidate>
+                <h2 class='js-prod_form_h2'> Add product</h2>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -209,13 +209,13 @@ include 'seo.php';
                   <div class="col-md-5">
                     <div class="form-group">
                       <label for="attr_name">Attribute name:</label>
-                      <input type="text" class="form-control" id="attr_name" name="attr_name[]" required>
+                      <input type="text" class="form-control" name="attr_name[]" required>
                     </div>
                   </div>
                   <div class="col-md-5">
                       <div class="form-group">
                         <label for="attr_value">Attribute value:</label>
-                        <input type="text" class="form-control" id="attr_value" name="attr_value[]" required>
+                        <input type="text" class="form-control" name="attr_value[]" required>
                       </div>
                   </div>
                   <div class="col-md-2">
@@ -236,7 +236,7 @@ include 'seo.php';
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <button class="btn btn-primary">Add</button>
+                    <button class="btn btn-primary js-prod_form_submit" data-id>Add</button>
                   </div>
                 </div>
               </form>
@@ -260,8 +260,8 @@ include 'seo.php';
                     <td class="mobile_hidden "></td>
                     <td class="mobile_hidden "></td>
                     <td colspan="2" data-id="">
-                      <button class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                      <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                      <button class="btn btn-info js-prod_edit_btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                      <button class="btn btn-danger js-prod_delete_btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>
                   </tr>
                 </tbody>
