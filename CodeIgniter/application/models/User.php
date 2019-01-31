@@ -29,6 +29,12 @@ class User extends CI_Model {
 		$query = $this->db->get_where($this->table, $data, 1);
 		return $query->row();
 	}
+
+	public function get_all_addr($ids) {
+		$query = "select * from $this->table where id IN ($ids)";
+		$rows = $this->db->query($query);
+		return $rows->result();
+	}
 }
 
 ?>

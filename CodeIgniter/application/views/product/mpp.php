@@ -47,12 +47,14 @@ if(!isset($this->session->userdata()['sv_amc'])) {
 			</div>
 			<div class="col-md-4">
 				<a href="#">
-					<strong>Dot Graphics Machinery Company</strong>
+					<strong><?php echo isset($row->company_name) ? $row->company_name : $row->uname;?></strong>
 				</a>
 				<div>
-					<span>Ballabhgarh, Faridabad</span>,<br>
-					<span>Shahid Bhagat Singh Marg, Bhudatt Colony,</span>,<br>
-					<span>India</span>
+					<span><?php echo $row->address;?></span>,<br>
+					<span><?php echo $row->city;?></span>,<br>
+					<span><?php echo $row->state;?></span>,<br>
+					<span><?php echo 'India.';?></span><br>
+					
 				</div>
 				<button class="btn btn-light">View mobile number</button>
 				<button class="btn btn-primary">Contact vendor</button>

@@ -11,7 +11,7 @@ class Users extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('product/category');
+		$this->load->view('category/category');
 	}
 
 	public function login()
@@ -29,13 +29,13 @@ class Users extends CI_Controller {
 			return;
 		}
 		$this->session->set_userdata(['sv_amc'=> $user]);
-		redirect('Products/list_category', 'refresh');
+		redirect('category/list_category', 'refresh');
 	}
 
 	public function do_register() {
 		$this->User->do_register($this->input->post());
 		//$this->load->view('index');
-		redirect('Products/list_category', 'refresh');
+		redirect('category/list_category', 'refresh');
 		
 	}
 
