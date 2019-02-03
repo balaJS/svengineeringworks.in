@@ -35,6 +35,12 @@ class User extends CI_Model {
 		$rows = $this->db->query($query);
 		return $rows->result();
 	}
+
+	public function profile_update($data, $id) {
+		$this->db->where('id', $id);
+		$this->db->update($this->table, $data);
+		return $this->get_data($id);
+	}
 }
 
 ?>

@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <div style="width: 3%;"><img src="<? echo base_url();?>/static/img/sv-engg-logo.png" width="100%"></div>
+        <div><img src="<? echo base_url();?>/static/img/sv-engg-logo.png" width="50%"></div>
         <a class="navbar-brand" href="/"><b>SV Engineering</b></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -47,14 +47,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </form>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/Users/login">Login</a>
+              <a class="btn btn-secondary" href="<?php echo site_url();?>/category/list_category">Category</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/Users/login">Register</a>
+              <a class="btn btn-secondary" href="<?php echo site_url();?>/user_products/mpp">My products</a>
+            </li>
+          <?php if(!isset($this->session->userdata()['sv_amc'])) { ?>
+            <li class="nav-item">
+              <a class="btn btn-secondary" href="<?php echo site_url();?>/users/login">Login/Register</a>
+            </li>
+          <?php } else { ?>
+            <li class="nav-item">
+              <a class="btn btn-secondary" href="<?php echo site_url();?>/users/login">User</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/Category/list_category">Category</a>
+              <a class="btn btn-secondary" href="<?php echo site_url();?>/users/logout">Logout</a>
             </li>
+          <?php }?>
           </ul>
         </div>
       </div>

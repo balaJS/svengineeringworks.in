@@ -12,11 +12,17 @@ class Category extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('product/category');
+		$this->load_footer();
 	}
 
 	public function list_category()
 	{
 		$data = $this->Category_model->list_category('all');
 		$this->load->view('product/category', ['data' => $data]);
+		$this->load_footer();
+	}
+
+	public function load_footer() {
+		$this->load->view('footer');
 	}
 }

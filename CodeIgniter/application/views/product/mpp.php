@@ -22,7 +22,7 @@ if(!isset($this->session->userdata()['sv_amc'])) {
 			</div>
 
 			<div class="col-md-5">
-				<a href="#">
+				<a href="<?php echo site_url();?>/Products/view_product/<?php echo $row->product_slug;?>">
 					<strong class="text-center"><?php echo $row->product_name;?></strong>
 				</a>
 				<div class="row">
@@ -34,9 +34,9 @@ if(!isset($this->session->userdata()['sv_amc'])) {
 							foreach($attributes as $att) { 
 							?>
 							<div><span><?php echo $att['key'];?></span>: <span><?php echo $att['value'];?></span></div>
+						<?php } ?>
 							<!-- <div><span>Automatic Grade</span>: <span>Automatic</span></div>
 							<div><span>Max Printing Length</span>: <span>15-20 Inch,  20-25 Inch</span></div> -->
-						<?php } ?>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -56,18 +56,11 @@ if(!isset($this->session->userdata()['sv_amc'])) {
 					<span><?php echo 'India.';?></span><br>
 					
 				</div>
-				<button class="btn btn-light">View mobile number</button>
-				<button class="btn btn-primary">Contact vendor</button>
+				<!-- <button class="btn btn-light">View mobile number</button> -->
+				<a class="btn btn-light" href="<?php echo $row->mobile ? 'tel:'.$row->mobile : 'mailto:'.$row->email;?>">Contact vendor</a>
 			</div>
 			
 		</div>
 	<?php }?>
 	</div>
 </section>
-
-<footer>
-	<a href="<?php echo base_url();?>" class="float-right"> Copy right @ 2019</a>
-</footer>
-
-</body>
-</html>
