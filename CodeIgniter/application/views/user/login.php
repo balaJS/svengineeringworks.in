@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<section class="main-section">
 <header class="text-center">
   <h3>Welcome to Printing machine world</h3>
 </header>
@@ -41,3 +42,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </form>
 </div>
 </div>
+</section>

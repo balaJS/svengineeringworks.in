@@ -1170,9 +1170,9 @@ class CI_Upload {
 	 * @param	string	$close
 	 * @return	string
 	 */
-	public function display_errors($open = '<p>', $close = '</p>')
+	public function display_errors($open = '<p class="alert alert-danger">', $close = '</p>', $skipHtml = true)
 	{
-		return (count($this->error_msg) > 0) ? $open.implode($close.$open, $this->error_msg).$close : '';
+		return (count($this->error_msg) > 0) ? $skipHtml ? $this->error_msg : $open.implode($close.$open, $this->error_msg).$close : '';
 	}
 
 	// --------------------------------------------------------------------

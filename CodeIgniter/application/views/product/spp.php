@@ -10,7 +10,7 @@ $category = $data[1][0];
 $name = $product->product_name;
 $prod_slug = $product->product_slug;
 $img = $product->product_image1;
-$spec = json_decode($product->product_spec);
+$spec = json_decode($product->product_spec, true);
 $spec_class = $product->product_spec ? 'display' : 'hidden';
 $desc = $product->product_desc;
 $desc_class = $product->product_desc ? 'display' : 'hidden';
@@ -24,7 +24,7 @@ $vendor_state = $product->state ? $product->state.',' : '';
 $company_name = $product->company_name;
 ?>
 
-<section class="spp-section">
+<section class="main-section">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-7">
@@ -40,8 +40,8 @@ $company_name = $product->company_name;
                 </div>
                 <div class="<?php echo $spec_class;?>">
                     Specification: 
-                    <?php foreach($spec as $sp) {?>
-                        <div><?php echo $sp->key;?> : <b><?php echo $sp->value;?></b></div>
+                    <?php foreach(array_keys($spec) as $key) {?>
+                        <div><?php echo $key;?> : <b><?php echo $spec[$key];?></b></div>
                     <?php } ?>
                 </div>
                 <div class="<?php echo $desc_class;?>">

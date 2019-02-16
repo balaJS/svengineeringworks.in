@@ -6,7 +6,6 @@ class Products extends Users {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->view('header');
 		$this->load->model('Products_model', '', TRUE);
 	}
 
@@ -25,12 +24,8 @@ class Products extends Users {
 
 	public function view_product() {
 		$uri = $this->uri->segment_array();
-		$data = $this->Products_model->view_product($uri[3]);
+		$data = $this->Products_model->view_product($uri[3],$uri[4]);
 		$this->load->view('product/spp', ['data' => $data]);
 		$this->load_footer();
-	}
-
-	public function load_footer() {
-		$this->load->view('footer');
 	}
 }

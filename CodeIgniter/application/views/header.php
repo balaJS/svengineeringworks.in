@@ -12,7 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-  <link href="<?php echo base_url();?>static/css/modern-business.css" rel="stylesheet">
+  <script src="<?php echo base_url();?>static/js/site.js" type="text/javascript" defer></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" defer>
+  <!-- <link href="<?php echo base_url();?>static/css/modern-business.css" rel="stylesheet"> -->
   <style type="text/css">
   body {
     margin:10px;
@@ -26,6 +28,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
      .btn-secondary {
        color: ghostwhite;
+     }
+     .main-section {
+      padding: 4em 0 3em;
      }
   </style>
   </head>
@@ -49,19 +54,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <li class="nav-item">
               <a class="btn btn-secondary" href="<?php echo site_url();?>/category/list_category">Category</a>
             </li>
-            <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/user_products/mpp">My products</a>
-            </li>
           <?php if(!isset($this->session->userdata()['sv_amc'])) { ?>
             <li class="nav-item">
               <a class="btn btn-secondary" href="<?php echo site_url();?>/users/login">Login/Register</a>
             </li>
           <?php } else { ?>
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/users/login">User</a>
+              <div class="dropdown">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                  User
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="<?php echo site_url();?>/users/login">Profile</a>
+                  <a class="dropdown-item" href="<?php echo site_url();?>/user_products/mpp">My products</a>
+                  <a class="dropdown-item" href="<?php echo site_url();?>/users/logout">Logout</a>
+                </div>
+              </div>
             </li>
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/users/logout">Logout</a>
+              <a class="btn btn-secondary" href="<?php echo site_url();?>/user_products/add_form">Add products</a>
             </li>
           <?php }?>
           </ul>

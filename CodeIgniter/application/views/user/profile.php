@@ -14,7 +14,7 @@ $city = $data->city ? $data->city : '';
 $state = $data->state ? $data->state : '';
 
 ?>
-<section class="profile">
+<section class="main-section">
     <h2 class="text-center">Update your profile details</h2>
     <form action="<?php echo site_url('users/profile_update');?>" method="post">
         <div class="container">

@@ -9,21 +9,22 @@ class Products_model extends CI_Model {
 
 	public function list_products($slug) {
 		
-		$query = "SELECT * FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_cat IN (select c.cat_id from categary as c where c.status=1 && c.cat_slug='$slug')";
+		$query = "SELECT * FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_cat = '$slug'";
 		$rows = $this->db->query($query);
 		return $rows->result();
 	}
 
-	public function view_product($slug) {
-		$query = "SELECT * FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_slug = '$slug'";
+	public function view_product($cslug, $pslug) {
+		#fix me(resorce drop here)
+		$query = "SELECT * FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_slug = '$pslug' && p.product_cat = '$cslug'";
 		$rows = $this->db->query($query);
-		$cat_query = "SELECT cat_name, cat_slug FROM categary where cat_id IN (SELECT product_cat FROM product where status=1 && product_slug = '$slug')";
+		$cat_query = "SELECT cat_name, cat_slug FROM categary where cat_slug = '$cslug'";
 		$cat_row = $this->db->query($cat_query);
 		return [$rows->result(), $cat_row->result()];
 	}
 
 	public function current_user_products($id = 0) {
-		$query = "SELECT * FROM product as p INNER JOIN categary as c ON p.product_cat = c.cat_id where p.status = 1 && p.user_id = '$id'";
+		$query = "SELECT * FROM product as p INNER JOIN categary as c ON p.product_cat = c.cat_slug where p.status = 1 && p.user_id = '$id'";
 		$rows = $this->db->query($query)->result();
 		$sorted = [];
 		$temp = [];
@@ -39,6 +40,7 @@ class Products_model extends CI_Model {
 				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['status'] = $data->status;
 				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['prod_create_date'] = $data->prod_create_date;
 				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['prod_last_modify'] = $data->prod_last_modify;
+				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['product_cat'] = $data->product_cat;
 				continue;
 			}
 				$temp['cat_id'][] = $data->cat_id;
@@ -59,10 +61,21 @@ class Products_model extends CI_Model {
 				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['status'] = $data->status;
 				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['prod_create_date'] = $data->prod_create_date;
 				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['prod_last_modify'] = $data->prod_last_modify;
-				
+				$sorted['cat_id-'.$data->cat_id]['prod_id-'.$data->product_id]['product_cat'] = $data->product_cat;
 		}
-		
 		return $sorted;
+	}
+
+	public function add_product($formData) {
+		return $this->db->insert($this->table, $formData);
+	}
+
+	public function unique_check($formData) {
+		$formData['status'] = 1;
+		$query = $this->db->get_where($this->table, $formData);
+		return [
+			'count'=> $query->num_rows()
+		];
 	}
 }
 

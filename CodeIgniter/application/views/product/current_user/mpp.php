@@ -5,10 +5,9 @@ if(!isset($this->session->userdata()['sv_amc'])) {
 	$this->load->view('user/login');
 	exit;
 }
-
 ?>
 
-<section class="user-spp">
+<section class="main-section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -18,7 +17,7 @@ if(!isset($this->session->userdata()['sv_amc'])) {
             </div>
         </div>
         <?php foreach($data['category'] as $row) { ?>
-        <section class="category">
+        <div class="category row">
             <a href="<?php echo site_url();?>/products/list_products/<?php echo $row['cat_slug'];?>"><h1><?php echo $row['cat_name'];?></h1></a>
             <?php foreach($data['cat_id-'.$row['cat_id']] as $product) {?>
             <div class="row">
@@ -26,7 +25,7 @@ if(!isset($this->session->userdata()['sv_amc'])) {
                     <img src="<?php echo base_url();?>static/img/products/<?php echo $product['product_image1'];?>" alt="<?php echo $product['product_name'];?>" class="img img-thumbnail"/>
                 </div>
                 <div class="col-md-8">
-                    <a href="<?php echo site_url();?>/products/view_product/<?php echo $product['product_slug'];?>">
+                    <a href="<?php echo site_url();?>/products/view_product/<?php echo $product['product_cat'].'/'.$product['product_slug'];?>">
                         <strong class="text-center"><?php echo $product['product_name'];?></strong>
                     </a>
                     <div class="row">
@@ -35,9 +34,9 @@ if(!isset($this->session->userdata()['sv_amc'])) {
                             <div class="attirubutes_div">
                                 <?php 
                                 $attributes = json_decode($product['product_spec'], true);
-                                foreach($attributes as $att) { 
+                                foreach(array_keys($attributes) as $key) { 
                                 ?>
-                                <div><span><?php echo $att['key'];?></span>: <span><?php echo $att['value'];?></span></div>
+                                <div><span><?php echo $key;?></span>: <span><?php echo $attributes[$key];?></span></div>
                             <?php } ?>
                             </div>
                     </div>
@@ -51,7 +50,7 @@ if(!isset($this->session->userdata()['sv_amc'])) {
                 </div>
             </div>
             <?php }?>
-        </section>
+        </div>
         
         <?php } ?>
     </div>
