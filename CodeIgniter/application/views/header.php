@@ -14,6 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <script src="<?php echo base_url();?>static/js/site.js" type="text/javascript" defer></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" defer>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" defer>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
   <!-- <link href="<?php echo base_url();?>static/css/modern-business.css" rel="stylesheet"> -->
   <style type="text/css">
   body {
@@ -32,6 +35,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      .main-section {
       padding: 4em 0 3em;
      }
+     .ui-widget {
+      z-index: 10000;
+     }
   </style>
   </head>
 
@@ -46,8 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <form action="get" class="form-inline">
-            <input type="tetx" class="form-control" name="search_input" />
+          <form action="post" class="form-inline" id="js-search-form">
+            <input type="text" class="form-control" name="search_input" />
             <button type="submit" class="btn btn-light">Search</button>
           </form>
           <ul class="navbar-nav ml-auto">

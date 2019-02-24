@@ -8,10 +8,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
 <div class="container col-md-5">
   <h4>Login form</h4>
-  <form action="<?php echo site_url('users/do_login');?>" method="post">
+  <form action="<?php echo site_url('users/do_login');?>" method="post" id="js-login-form">
     <div class="form-group">
       <label for="email">Email / Mobile:</label>
-      <input type="text" class="form-control" placeholder="Enter email" name="email" required>
+      <input type="text" class="form-control js-reg-unique-field" placeholder="Enter email" name="email" required>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
@@ -24,14 +24,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="container col-md-5">
   <h4>Register form</h4>
-  <form action="<?php echo site_url('users/do_register');?>" method="post">
+  <form action="<?php echo site_url('users/do_register');?>" method="post" id="js-reg-form">
     <div class="form-group">
       <label for="email">User name:</label>
       <input type="text" class="form-control" placeholder="Enter user name" name="uname" required>
     </div>
     <div class="form-group">
       <label for="email">Email / Mobile:</label>
-      <input type="text" class="form-control" placeholder="Enter email" name="email" required>
+      <input type="text" class="form-control js-reg-unique-field" placeholder="Enter email" name="email" required>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>

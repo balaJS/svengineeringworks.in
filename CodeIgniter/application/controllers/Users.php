@@ -27,7 +27,6 @@ class Users extends CI_Controller {
 	}
 
 	public function do_login() {
-		
 		$user = $this->User->do_login($this->input->post());
 		if(count($user) <= 0) {
 			$this->auth_fail();
@@ -39,7 +38,8 @@ class Users extends CI_Controller {
 
 	public function do_register() {
 		$this->User->do_register($this->input->post());
-		redirect('category/list_category', 'refresh');
+		$this->do_login();
+		#redirect('category/list_category', 'refresh');
 		return;
 	}
 
@@ -83,6 +83,16 @@ class Users extends CI_Controller {
             return false;
 		}
 		return true;
+	}
+
+	protected function current_user() {
+		return $this->session->userdata()['sv_amc']->id;
+	}
+
+	public function sess_update($array) {
+		$sessData = $this->session->userdata()['sv_amc'];
+        $sessData->$array[0] = $array[1];
+        $this->session->set_userdata(['sv_amc'=> $sessData]);
 	}
 
 	public function logout() {

@@ -13,31 +13,25 @@ if(!isset($this->session->userdata()['sv_amc'])) {
 </header>
 	<div class="container">
 		<div class="row">
-		<?php foreach($data as $row) {?>	
-			<div class="col-md-3">
-				<a href="<?php echo site_url();?>/Products/list_products/<?php echo $row->cat_slug;?>" title="<?php echo $row->cat_name;?>">
+		<?php 
+		foreach($data as $row) { 
+			if($row->hadProducts) {
+				$opacity = '';
+				$href = site_url().'/Products/list_products/'.$row->cat_slug;
+				$title= $row->cat_name;
+			} else {
+				$opacity = 'style="opacity: 0.4"';
+				$href = 'javascript:void()';
+				$title = 'No products';
+			}
+		?>	
+			<div class="col-md-3" <?php echo $opacity;?>>
+				<a href="<?php echo $href;?>" title="<?php echo $title;?>">
 					<img src="<?php echo base_url();?>static/img/products/<?php echo $row->cat_image;?>" width="100%" height="auto" alt="<?php echo $row->cat_name;?>">	
 					<strong class="text-center"><?php echo $row->cat_name;?></strong>
 				</a>
 			</div>
 		<?php }?>
-			<!-- 
-			<div class="col-md-3">
-				<a href="#" title="Category">
-					<img src="<?php echo base_url();?>/static/img/balan.jpeg" width="100%" height="auto">	
-				</a>
-			</div>
-			<div class="col-md-3">
-				<a href="#" title="Category">
-					<img src="<?php echo base_url();?>/static/img/balan.jpeg" width="100%" height="auto">	
-				</a>
-			</div>
-			<div class="col-md-3">
-				<a href="#" title="Category">
-					<img src="<?php echo base_url();?>/static/img/balan.jpeg" width="100%" height="auto">	
-				</a>
-			</div> -->
-
 		</div>
 	</div>
 </section>

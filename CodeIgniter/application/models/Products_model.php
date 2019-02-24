@@ -7,20 +7,27 @@ class Products_model extends CI_Model {
 		$this->load->model('User');
 	}
 
-	public function list_products($slug) {
-		
-		$query = "SELECT * FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_cat = '$slug'";
+	public function list_products($cat_slug, $internal = 0) {
+		$selecter = $internal ? 'product_id' : '*';
+		$query = "SELECT $selecter FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_cat = '$cat_slug'";
 		$rows = $this->db->query($query);
+		if($internal) return $rows->num_rows();
 		return $rows->result();
 	}
 
-	public function view_product($cslug, $pslug) {
+	public function view_product($cslug, $pslug, $userid = 0) {
 		#fix me(resorce drop here)
-		$query = "SELECT * FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_slug = '$pslug' && p.product_cat = '$cslug'";
+		$userWhere = $userid === 0 ? '' :  "&& u.id = '$userid'";
+		$query = "SELECT * FROM product as p INNER JOIN users as u ON p.user_id = u.id where p.status = 1 && p.product_slug = '$pslug' && p.product_cat = '$cslug' $userWhere";
 		$rows = $this->db->query($query);
 		$cat_query = "SELECT cat_name, cat_slug FROM categary where cat_slug = '$cslug'";
 		$cat_row = $this->db->query($cat_query);
 		return [$rows->result(), $cat_row->result()];
+	}
+
+	public function get_product($where) {
+		$this->db->select('product_cat, product_slug');
+		return $this->db->get_where($this->table, $where)->result()[0];
 	}
 
 	public function current_user_products($id = 0) {
@@ -66,16 +73,51 @@ class Products_model extends CI_Model {
 		return $sorted;
 	}
 
-	public function add_product($formData) {
-		return $this->db->insert($this->table, $formData);
+	public function add_product($formData, $id) {
+
+		if(!$id) {
+			return $this->db->insert($this->table, $formData);
+		} else {
+			$this->db->where('product_id', $id);
+			return $this->db->update($this->table, $formData);
+		}
 	}
 
 	public function unique_check($formData) {
 		$formData['status'] = 1;
 		$query = $this->db->get_where($this->table, $formData);
+		$name = $query->num_rows() ? $query->result()[0]->product_name : '';
 		return [
-			'count'=> $query->num_rows()
+			'count'=> $query->num_rows(),
+			'name' => $name
 		];
+	}
+
+	public function delete_product($formData) {
+		$query = $this->db->get_where($this->table, $formData);
+
+		$data = ['status'=> false, 'criteria'=> "Sorry, You are trying to delete another user's product"];
+		if($query->num_rows()) {
+			$this->db->delete($this->table, $formData);
+			$data = ['status'=> 0, 'criteria'=> "Your product was deteled."];
+		}
+		return $data;
+	}
+
+	public function auto_complete($search_term) {
+		$productsQuery = $this->db->select('product_slug, product_name, product_cat')->from($this->table)->where("product_name like '%$search_term%'")->get();
+		if($productsQuery->num_rows()) {
+			return $productsQuery->result_array();
+		}
+		
+		$this->load->model('Category_model');
+		$categoriesQuery = $this->Category_model->auto_complete($search_term);
+
+		if($categoriesQuery->num_rows()) {
+			return $categoriesQuery->result_array();
+		}
+
+		return ['status'=> false, 'data'=> []];
 	}
 }
 

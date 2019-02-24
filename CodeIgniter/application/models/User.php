@@ -7,20 +7,11 @@ class User extends CI_Model {
 	}
 
 	public function do_register($post) {
-		$data = [
-			'uname' => $post['uname'],
-			'email' => $post['email'],
-			'pwd' => $post['pwd'],
-		];
-		return $this->db->insert($this->table, $data);
+		return $this->db->insert($this->table, $post);
 	}
 
 	public function do_login($post) {
-		$data = [
-			'email' => $post['email'],
-			'pwd' => $post['pwd'],
-		];
-		$query = $this->db->get_where($this->table, $data, 1);
+		$query = $this->db->get_where($this->table, $post, 1);
 		return $query->row();
 	}
 

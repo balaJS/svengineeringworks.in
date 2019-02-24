@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 //app routes
+$route['user_products/edit/(:any)/(:any)']['get'] = "user_products/edit_form/$1/$2";

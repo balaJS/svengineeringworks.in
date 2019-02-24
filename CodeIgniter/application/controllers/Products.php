@@ -28,4 +28,10 @@ class Products extends Users {
 		$this->load->view('product/spp', ['data' => $data]);
 		$this->load_footer();
 	}
+
+	public function auto_complete() {
+		$search_terms = $this->Products_model->auto_complete($this->input->get('term'));
+		echo json_encode($search_terms);
+		return;
+	}
 }
