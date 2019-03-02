@@ -74,7 +74,6 @@ class Products_model extends CI_Model {
 	}
 
 	public function add_product($formData, $id) {
-
 		if(!$id) {
 			return $this->db->insert($this->table, $formData);
 		} else {

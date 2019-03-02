@@ -6,6 +6,7 @@ const site = {
         this.add_product.unique_prod_name();
         this.mpp.delete_product();
         this.account.form_submit(['#js-login-form', '#js-reg-form']);
+        this.account.email_mobile_unique();
         this.generic.auto_complete("[name='search_input']");
         this.generic.search_form_submit();
     },
@@ -109,8 +110,8 @@ const site = {
         },
         form_submit: function(selectors) {
             $.each(selectors, function(index, selector) {
-                $(selector).on('submit', function(e) {
-                    var $field = $('.js-reg-unique-field', $(selector));
+                var $field = $('.js-reg-unique-field', $(selector));
+                $field.on('blur', function(e) {
                     var emailOrMobileVal = $field.val();
                     if(site.generic.nonNumberExp.test(emailOrMobileVal)) { //Fix me.
                         var emailOrMobileValArr = emailOrMobileVal.split('@');//reduce the steps using regexp
@@ -119,16 +120,17 @@ const site = {
                             var emailDomainArr = domain.split('.');
                             if(emailDomainArr.length === 2) {
                                 $field.attr('name', 'email');
-                                return true;
+                                site.generic.msg_handler($field, {'criteria': ''}, 1, 0);
+                                return;
                             } else {
                                 e.preventDefault();
-                                site.generic.msg_handler($field, {'criteria': 'Email format is wrong','status': false});
+                                site.generic.msg_handler($field, {'criteria': 'Email format is wrong','status': false}, 0, 1);
                                 return false;
                             }
                         } else {
                             //wrong email. throw error
                             e.preventDefault();
-                            site.generic.msg_handler($field, {'criteria': 'Email format is wrong','status': false});
+                            site.generic.msg_handler($field, {'criteria': 'Email format is wrong','status': false}, 0, 1);
                             return false;
                         }
                     } else {
@@ -136,35 +138,54 @@ const site = {
                         var mobileno_length = emailOrMobileVal.length;
                         if(mobileno_length <= 12 && mobileno_length >= 10) {
                             $field.attr('name', 'mobile');
-                            return true;
+                            site.generic.msg_handler($field, {'criteria': ''}, 1, 0);
+                            return;
                         }
                         e.preventDefault();
-                        site.generic.msg_handler($field, {'criteria': `Mobile number must be between 10 - 12 digits. But your mobile number length is ${mobileno_length}.`,'status': false});
+                        site.generic.msg_handler($field, {'criteria': `Mobile number must be between 10 - 12 digits. But your mobile number length is ${mobileno_length}.`,'status': false}, 0, 1);
                         return false;
                     }
                     
                 });
             });
         },
+        email_mobile_unique: function() {
+            $('#js-reg-form').on('submit', function(e) {
+                var $field = $('.js-reg-unique-field', '#js-reg-form');
+
+                var req = {
+                    url: 'users/unique_check',
+                    req: {
+                        name: $field.attr('name'),
+                        value: $field.val()
+                    }
+                };
+
+                var isUniqueRes = site.generic.ajax(req).data;
+                if(!isUniqueRes.status) e.preventDefault();
+                site.generic.msg_handler($field, isUniqueRes, isUniqueRes.status, !isUniqueRes.status);
+            });
+        },
     },
 
     generic: {
         nonNumberExp: /[^0-9+]/,
-        msg_handler: function(elem, data, isSuccess = 0, disableSubmit = 0) {
-            if (data.status) {
-                if(isSuccess) {
-                    $('.error').remove();
+        msg_handler: function($elem, data, isMsg = 0, disableSubmit = 0) {
+            $elem.next('.error').remove();
+            $nearestSubmit = $elem.closest('form').find('button[type="submit"]');
+
+            if (isMsg) {//show msg
+                if(data.criteria) {
                     let template = `<span class='error text-success'>${data.criteria} <br/></span>`;
-                    elem.closest('form').find('button').before(template); return;
+                    $nearestSubmit.before(template);
                 }
-                elem.next().remove();
-                elem.closest('form').find('button[type="submit"]').removeAttr('disabled');
+                $nearestSubmit.removeAttr('disabled');
+            } else { //throw error
+                let template = `<span class='error text-danger'>${data.criteria}</span>`;
+                $elem.after(template);
+                if(disableSubmit) $nearestSubmit.attr('disabled',true);
                 return;
             }
-            elem.next().remove();
-            let template = `<span class='error text-danger'>${data.criteria}</span>`;
-            elem.after(template);
-            if(disableSubmit) elem.closest('form').find('button[type="submit"]').attr('disabled',true);
         },
         ajax: function(req) {
             let base_url = location.host === '127.0.0.1' ? location.origin+'/projects/new-svengineeringworks.in/CodeIgniter' : location.origin;
@@ -227,7 +248,6 @@ const site = {
         search_form_submit: function() {
             $('#js-search-form').on('submit', function(e) {
                 e.preventDefault();
-                var $form = $('#js-search-form');
                 var $input = $('[name="search_input"]');
                 
                 if(!$input.val()) {
@@ -236,7 +256,11 @@ const site = {
                 }
                 
                 var urlDeterminateArr = $input.attr('data-product_slug') === '0' ?  ['list_products', '']: ['view_product', $input.attr('data-product_slug')];
-                var url_suffix = '/index.php/Products/'+urlDeterminateArr[0]+'/'+$input.attr('data-product_cat')+'/'+urlDeterminateArr[1];
+                if(!urlDeterminateArr[1] && !$input.attr('data-product_cat')) {
+                    alert('No results found');
+                    return;
+                }
+                var url_suffix = '/index.php/Products/'+urlDeterminateArr[0]+'/'+ $input.attr('data-product_cat') +'/'+urlDeterminateArr[1];
                 
                 var base_url = location.host === '127.0.0.1' ? location.origin+'/projects/new-svengineeringworks.in/CodeIgniter' : location.origin;
                 location.href = base_url+url_suffix;

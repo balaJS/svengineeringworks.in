@@ -19,7 +19,10 @@ $state = $data->state ? $data->state : '';
     <form action="<?php echo site_url('users/profile_update');?>" method="post">
         <div class="container">
         <?php if ($this->session->flashdata('msg') !== null) { ?>
-            <p class="alert-success"><?php echo $this->session->flashdata('msg');?></p>
+            <p class="alert alert-success"><?php echo $this->session->flashdata('msg');?></p>
+        <?php } ?>
+        <?php if ($this->session->flashdata('error') !== null) { ?>
+            <p class="alert alert-danger"><?php echo $this->session->flashdata('error');?></p>
         <?php } ?>
             <div class="row">
                 <div class="col-md-6">

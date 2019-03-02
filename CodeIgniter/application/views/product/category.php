@@ -12,8 +12,13 @@ if(!isset($this->session->userdata()['sv_amc'])) {
   <h3>Welcome to Printing machine world</h3>
 </header>
 	<div class="container">
+	<?php
+	if($this->session->flashdata('error') !== null) {
+		echo "<p class='alert alert-danger'>". $this->session->flashdata('error') ."</p>";
+	}
+	?>
 		<div class="row">
-		<?php 
+		<?php
 		foreach($data as $row) { 
 			if($row->hadProducts) {
 				$opacity = '';

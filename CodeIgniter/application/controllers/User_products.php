@@ -6,14 +6,14 @@ class User_products extends Products {
     public function __construct(){
         parent::__construct();
         $this->check_auth();
-        $this->user_id = $this->session->userdata()['sv_amc']->id;
+        $this->user_id = $this->current_user();
         if(isset($_POST['isAjax'])) {
             unset($_POST['isAjax']);
         }
     }
     
     public function index() {
-        $data = $this->Products_model->current_user_products($this->user_id);
+        $data = $this->Products_model->current_user_products($this->current_user());
         $this->load->view('product/current_user/mpp', ['data' => $data]);
     }
 
@@ -30,6 +30,32 @@ class User_products extends Products {
 
     public function add($prodId = 0) {
         $this->load->model('Category_model');
+        if($prodId) {
+            $slugs = $this->Products_model->get_product(['product_id'=> $prodId]);
+            $form_path = 'user_products/edit/'.$slugs->product_cat.'/'.$slugs->product_slug;
+        } else {
+            $form_path = 'user_products/add_form';
+        }
+
+        $isFormFiledValidate = $this->formFieldValidate('products');
+        if(!$isFormFiledValidate) {
+
+            $data = [
+                'msg' => 'This operation failed.Because form fields are mismatched.',
+                'htmlClass' => 'alert alert-danger'
+            ];
+            $this->session->set_flashdata('msg', $data);
+            redirect($form_path, 'refresh');
+            exit;
+        } else if(isset($_FILES['product_image1']) && empty($_FILES['product_image1']['name']) && !$prodId) {
+            $data = [
+                'msg' => 'Image is mandatory field. Plaese try again.',
+                'htmlClass' => 'alert alert-danger'
+            ];
+            $this->session->set_flashdata('msg', $data);
+            redirect($form_path, 'refresh');
+            exit;
+        }
 
         if($_FILES['product_image1']['size'] !== 0) {
             $this->load->library('upload');
@@ -45,7 +71,7 @@ class User_products extends Products {
                     'htmlClass' => 'alert alert-danger'
                 ];
                 $this->session->set_flashdata('msg', $data);
-                redirect('user_products/add_form', 'refresh');
+                redirect($form_path, 'refresh');
                 return;
             }
         }
@@ -79,12 +105,12 @@ class User_products extends Products {
         ];
         if(!$returnData) {
             $data = [
-                'msg' => 'Product added is failed. Plaese try again.',
+                'msg' => 'This operation failed. Plaese try again.',
                 'htmlClass' => 'alert alert-danger'
             ];
         }
         $this->session->set_flashdata('msg', $data);
-        redirect('user_products/add_form', 'refresh');
+        redirect($form_path, 'refresh');
         exit;
     }
 
@@ -108,7 +134,6 @@ class User_products extends Products {
             redirect('user_products/mpp', 'refresh');
             exit;
         }
-        #var_dump($cat_prod_data);exit;
 
         $this->load->view('product/current_user/add_form', ['page' => 'edit', 'overAllData' => [$allCatData, $cat_prod_data]]);
         $this->load_footer();
@@ -119,7 +144,6 @@ class User_products extends Products {
     public function update() {
         $currentProdId = $this->session->userdata()['sv_amc']->currentProdId;
         $returnData = $this->add($currentProdId);
-        $slugs = $this->Products_model->get_product(['product_id'=> $currentProdId]);
         $data = [
             'msg' => 'Product updated successfully.',
             'htmlClass' => 'alert alert-success'
@@ -130,14 +154,20 @@ class User_products extends Products {
                 'htmlClass' => 'alert alert-danger'
             ];
         }
-
+        $slugs = $this->Products_model->get_product(['product_id'=> $currentProdId]);
+        $form_path = 'user_products/edit/'.$slugs->product_cat.'/'.$slugs->product_slug;
         $this->session->set_flashdata('msg', $data);
-        redirect('user_products/edit/'.$slugs->product_cat.'/'.$slugs->product_slug, 'refresh');
+        redirect($form_path, 'refresh');
         exit;
     }
 
     public function delete() {
         $postData = $this->input->post();
+        $isFormFiledValidate = $this->formFieldValidate('productDelete');
+        if(!$isFormFiledValidate) {
+            echo json_encode(['status'=> false,'msg'=> 'You doing wrong. refresh the page, then try again']);
+            return;
+        }
         $postData['user_id'] = $this->current_user();
         $returnData = $this->Products_model->delete_product($this->input->post());
         echo json_encode($returnData);

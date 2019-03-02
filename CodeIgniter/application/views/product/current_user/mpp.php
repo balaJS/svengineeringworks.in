@@ -16,7 +16,12 @@ if(!isset($this->session->userdata()['sv_amc'])) {
                 </div>
             </div>
         </div>
-        <?php foreach($data['category'] as $row) { ?>
+        <?php
+        if(!count($data)) {
+            echo "<p class='text-center'><b>You don't have any product. If you add product,check add product button:)</b></p> </div></section>";
+            return;
+        }
+        foreach($data['category'] as $row) { ?>
         <div class="js-category row">
             <a href="<?php echo site_url();?>/products/list_products/<?php echo $row['cat_slug'];?>"><h1><?php echo $row['cat_name'];?></h1></a>
             <?php foreach($data['cat_id-'.$row['cat_id']] as $product) {?>

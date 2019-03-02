@@ -25,6 +25,13 @@ class Products extends Users {
 	public function view_product() {
 		$uri = $this->uri->segment_array();
 		$data = $this->Products_model->view_product($uri[3],$uri[4]);
+
+		if(!$data[0] && !$data[1]) {
+			$this->session->set_flashdata('error', 'Your search term is not found.');
+			redirect('category/list_category', 'refresh');
+			return;
+		}
+
 		$this->load->view('product/spp', ['data' => $data]);
 		$this->load_footer();
 	}
