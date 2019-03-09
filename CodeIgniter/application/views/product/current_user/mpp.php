@@ -18,7 +18,7 @@ if(!isset($this->session->userdata()['sv_amc'])) {
         </div>
         <?php
         if(!count($data)) {
-            echo "<p class='text-center'><b>You don't have any product. If you add product,check add product button:)</b></p> </div></section>";
+            echo "<p class='text-center'><b>You don't have any product. If you want to add product,click add product button:)</b></p> </div></section>";
             return;
         }
         foreach($data['category'] as $row) { ?>

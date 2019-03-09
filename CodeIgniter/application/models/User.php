@@ -19,7 +19,8 @@ class User extends CI_Model {
 		$emailOrMobileArr[$emailOrMobile] = $post[$emailOrMobile];
 		$query = $this->db->select('id, pwd')->get_where($this->table, $emailOrMobileArr, 1);
 		$semiUserData = $query->row();
-		if($semiUserData->pwd && password_verify($post['pwd'], $semiUserData->pwd)) {
+
+		if($semiUserData && $semiUserData->pwd && password_verify($post['pwd'], $semiUserData->pwd)) {
 			$return = $this->get_data($semiUserData->id);
 		} else {
 			$return = [];

@@ -16,7 +16,7 @@ if(!isset($this->session->userdata()['sv_amc'])) {
 		<div class="row">
 			
 			<div class="col-md-3">
-				<a href="<?php echo site_url();?>/Products/view_product/<?php echo $row->product_slug;?>" title="<?php echo $row->product_name;?>">
+				<a href="<?php echo site_url();?>/Products/view_product/<?php echo $row->product_cat.'/'.$row->product_slug;?>" title="<?php echo $row->product_name;?>">
 					<img src="<?php echo base_url();?>static/img/products/<?php echo $row->product_image1;?>" class="img-thumbnail" width="100%" height="auto" alt="<?php echo $row->product_name;?>">
 				</a>
 			</div>

@@ -112,9 +112,11 @@ class Users extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function check_auth() {
+	public function check_auth($justStatus = false) {
 		if(!isset($this->session->userdata()['sv_amc'])) {
-            $this->index();
+			if(!$justStatus) {
+				$this->index();
+			}
             return false;
 		}
 		return true;
@@ -141,6 +143,37 @@ class Users extends CI_Controller {
 		$return = $this->User->unique_check($post);
         echo json_encode($return);
         return;
+	}
+
+	public function reset() {
+		$isLogin = $this->check_auth(true);
+		$title = $isLogin ? 'Change' : 'Reset';
+		$this->load->view('user/reset_password', ['isLogin'=> $isLogin, 'title'=> $title]);
+		$this->load_footer();
+	}
+
+	public function do_reset() {
+		$oldPassword = $this->input->post('old_password');
+		$newPassword = $this->input->post('new_password');
+		$newPassword2 = $this->input->post('new_password2');
+
+		$returnData = ['class'=> 'alert alert-success', 'msg'=> 'Password updated successfully.'];
+		if($newPassword === $newPassword2) {
+			$userData = $this->get_data($this->current_user());
+			$isPasswordMatch = password_verify($oldPassword, $userData->pwd);
+
+			if($isPasswordMatch) {
+				$willBeUpdateData = ['pwd'=> password_hash($newPassword, PASSWORD_DEFAULT)];
+				$this->User->profile_update($willBeUpdateData, $this->current_user());
+			} else {
+				$returnData = ['class'=> 'alert alert-danger', 'msg'=> 'Your old password is wrong. Please confirm.'];
+			}
+		} else {
+			$returnData = ['class'=> 'alert alert-danger', 'msg'=> 'Your passwords were mismatched. Please confirm.'];
+		}
+		$this->session->set_flashdata($returnData);
+		redirect('users/reset', 'refresh');
+		return;
 	}
 
 	public function logout() {

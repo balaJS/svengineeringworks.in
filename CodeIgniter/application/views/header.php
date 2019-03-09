@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <link rel="icon" href="<?php echo base_url();?>static/img/sv-engg-logo.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
@@ -38,6 +39,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      .ui-widget {
       z-index: 10000;
      }
+     li.nav-item {
+      padding: 0.2em;
+     }
+     li.nav-item:hover, li.nav-item:active {
+      background-color: dimgray;
+     }
+     li.nav-item a:hover {
+      text-decoration: none !important;
+     }
+     .show .ui-autocomplete-input {
+       width: 12em;
+       margin-right: 1em;
+     }
   </style>
   </head>
 
@@ -58,27 +72,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </form>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/category/list_category">Category</a>
+              <a class="text-white" href="<?php echo site_url();?>/category/list_category">Category</a>
             </li>
           <?php if(!isset($this->session->userdata()['sv_amc'])) { ?>
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/users/login">Login/Register</a>
+              <a class="text-white" href="<?php echo site_url();?>/users/login">Login/Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="text-white" href="<?php echo site_url();?>/users/reset">Reset password</a>
             </li>
           <?php } else { ?>
             <li class="nav-item">
-              <div class="dropdown">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-                  User
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="<?php echo site_url();?>/users/login">Profile</a>
-                  <a class="dropdown-item" href="<?php echo site_url();?>/user_products/mpp">My products</a>
-                  <a class="dropdown-item" href="<?php echo site_url();?>/users/logout">Logout</a>
-                </div>
-              </div>
+              <a class="text-white" href="<?php echo site_url();?>/user_products/add_form">Add products</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-secondary" href="<?php echo site_url();?>/user_products/add_form">Add products</a>
+              <a class="text-white" href="<?php echo site_url();?>/users/login">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="text-white" href="<?php echo site_url();?>/user_products/mpp">My products</a>
+            </li>
+            <li class="nav-item">
+              <a class="text-white" href="<?php echo site_url();?>/users/logout">Logout</a>
             </li>
           <?php }?>
           </ul>
