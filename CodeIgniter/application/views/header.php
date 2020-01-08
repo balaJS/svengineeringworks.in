@@ -1,62 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-  <title>Print overflow</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-  <link rel="icon" href="<?php echo base_url();?>static/img/sv-engg-logo.png">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url();?>static/js/site.js" type="text/javascript" defer></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" defer>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" defer>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-  <!-- <link href="<?php echo base_url();?>static/css/modern-business.css" rel="stylesheet"> -->
-  <style type="text/css">
-  body {
-    margin:10px;
-    background-color: aliceblue;
-    }
-    .content_section {
-      background-color: papayawhip;
-    }
-    .row > div {
-      margin-top: 0.5em;
-    }
-     .btn-secondary {
-       color: ghostwhite;
-     }
-     .main-section {
-      padding: 4em 0 3em;
-     }
-     .ui-widget {
-      z-index: 10000;
-     }
-     li.nav-item {
-      padding: 0.2em;
-     }
-     li.nav-item:hover, li.nav-item:active {
-      background-color: dimgray;
-     }
-     li.nav-item a:hover {
-      text-decoration: none !important;
-     }
-     .show .ui-autocomplete-input {
-       width: 12em;
-       margin-right: 1em;
-     }
-  </style>
-  </head>
-
-  <body>
-
+<header>
     <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -99,3 +44,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
       </div>
     </nav>
+</header>

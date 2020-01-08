@@ -1,0 +1,35 @@
+body {
+    margin:10px;
+    background-color: aliceblue;
+}
+.content_section {
+      background-color: papayawhip;
+}
+.row > div {
+      margin-top: 0.5em;
+}
+.btn-secondary {
+       color: ghostwhite;
+}
+.main-section {
+      padding: 4em 0 3em;
+}
+.ui-widget {
+      z-index: 10000;
+}
+li.nav-item {
+      padding: 0.2em;
+}
+li.nav-item:hover, li.nav-item:active {
+      background-color: dimgray;
+}
+li.nav-item a:hover {
+      text-decoration: none !important;
+}
+.show .ui-autocomplete-input {
+       width: 12em;
+       margin-right: 1em;
+}
+.page-content {
+      margin-top: 5%;
+}

@@ -266,7 +266,13 @@ const site = {
                 location.href = base_url+url_suffix;
             });
         },
-    },    
+    },
+    menu: {
+        $parentElem : $('.side-menu'),
+        create: function() {
+
+        },
+    },
 };
 
 site.init();
